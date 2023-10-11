@@ -117,7 +117,6 @@ export default class Map {
   recalculateRenderedCells() {
     const centerPositionX = -this.container.x + this.app.screen.width / 2;
     const centerPositionY = -this.container.y + this.app.screen.height / 2;
-    const distance = 150;
     const centeredCells = this.getCellsInRadius(
       centerPositionX,
       centerPositionY,
