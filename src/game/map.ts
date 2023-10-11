@@ -66,7 +66,7 @@ export default class Map {
       )
     );
 
-    this.container.interactive = true;
+    this.container.eventMode = 'static';
     this.container.on("wheel", this.handleMapMove.bind(this));
     this.container.on("pointermove", this.handleMapMove.bind(this));
     this.container.on("db", this.handleMapMove.bind(this));
