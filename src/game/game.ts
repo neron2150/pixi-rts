@@ -1,15 +1,15 @@
 import Map from "./map";
 import pixiApp from "../app/pixiApp";
 import { TexturesType } from "../app/assetsHelper";
-import Screen from "./screen";
+import { Container } from "pixi.js";
 
 export default class Game {
   map: Map;
-  screen: Screen;
+  stage = new Container();
   constructor(textures: TexturesType) {
-    this.map = new Map([50, 50], textures);
-    this.screen = new Screen(pixiApp);
-    this.map.addToContainer(this.screen.layers.map);
+    this.map = new Map([200, 200], textures, pixiApp);
+    this.stage.addChild(this.map.container);
+    pixiApp.stage.addChild(this.stage);
   }
   run() {
     pixiApp.start();

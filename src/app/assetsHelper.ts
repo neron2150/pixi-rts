@@ -1822,7 +1822,6 @@ const atlasData = {
     scale: "1",
   },
 };
-console.log(atlasData.frames);
 
 export const texturesPromise = new Spritesheet(
   BaseTexture.from(atlasData.meta.image),
@@ -1836,7 +1835,6 @@ export const createSprite = (texture: Texture, size = Cell.CellSize) => {
   const sprite = new Sprite(texture);
   sprite.cullable = false;
   texture.baseTexture.scaleMode = SCALE_MODES.NEAREST;
-  sprite.anchor.set(0.5);
   sprite.width = size;
   sprite.height = size;
   return sprite;
