@@ -50,7 +50,6 @@ export default class Map {
     app: Application
   ) {
     this.app = app;
-    app.ticker.add((delta) => console.log(delta.toFixed(6)));
     const baseTexture = textures.grass21;
     const additional = [
       textures.grass82,
