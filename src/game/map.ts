@@ -1,7 +1,5 @@
 import {
   Container,
-  FederatedPointerEvent,
-  FederatedWheelEvent,
   Sprite,
   Texture,
 } from "pixi.js";
@@ -95,27 +93,6 @@ export default class Map {
 
     return result;
   }
-  // handleMapMove = (x: number = 0, y: number = 0) => {
-  //   const centerPositionX = -x + pixiApp.screen.width / 2;
-  //   const centerPositionY = -y + pixiApp.screen.height / 2;
-  //   const centeredCells = this.getCellsInRadius(
-  //     centerPositionX,
-  //     centerPositionY,
-  //     pixiApp.screen.width / 2 + Game.CELL_SIZE + 2,
-  //     pixiApp.screen.height / 2 + Game.CELL_SIZE + 2
-  //   );
-  //   centeredCells.forEach((cell) => {
-  //     this.container.addChild(cell);
-  //   });
-  //   this.container.children.forEach((child) => {
-  //     if (
-  //       !centeredCells.includes(child as Sprite) &&
-  //       child.name !== "placeholder"
-  //     ) {
-  //       this.container.removeChild(child);
-  //     }
-  //   });
-  // };
   handleMapMove = (x: number = 0, y: number = 0) => {
     const centerX = -x + pixiApp.screen.width / 2;
     const centerY = -y + pixiApp.screen.height / 2;

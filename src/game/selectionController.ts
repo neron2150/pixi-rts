@@ -15,6 +15,9 @@ export default class SelectionController {
       this.handlePointerDown.bind(this)
     );
     worldInstance.container.on("pointerup", this.handlePointerUp.bind(this));
+    worldInstance.container.on("pointerleave", () => {
+      this.handlePointerUp();
+    });
     worldInstance.container.on(
       "pointermove",
       this.handlePointerMove.bind(this)
@@ -29,6 +32,7 @@ export default class SelectionController {
   }
 
   handlePointerDown = (e: any) => {
+    console.log(e);
     this.startPoint = new Point(
       e.data.global.x - this.worldInstance.container.x,
       e.data.global.y - this.worldInstance.container.y
@@ -36,8 +40,8 @@ export default class SelectionController {
     this.selectionRectangle = new Rectangle(
       e.data.global.x - this.worldInstance.container.x,
       e.data.global.y - this.worldInstance.container.y,
-      10,
-      10
+      0,
+      0
     );
     this.drawSelectionRectangles();
   };

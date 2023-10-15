@@ -3,7 +3,8 @@ import World from "./world";
 
 export default class Game {
   world;
-  static CELL_SIZE = 48;
+  static CELL_SIZE = 16;
+  
   constructor() {
     this.world = new World();
     pixiApp.stage.addChild(this.world.container);
