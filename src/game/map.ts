@@ -1,19 +1,19 @@
 import {
-  Application,
   Container,
   FederatedPointerEvent,
   FederatedWheelEvent,
   Sprite,
   Texture,
 } from "pixi.js";
-import { TexturesType, createSprite } from "../app/assetsHelper";
+import { Resources } from "../app/resourses";
+import pixiApp from "../app/pixiApp";
+import Game from "./game";
 
 export class Cell {
   obstacle: number;
   x: number;
   y: number;
   sprite: Sprite;
-  static CellSize = 64;
   constructor({
     x = 0,
     y = 0,
@@ -32,9 +32,11 @@ export class Cell {
     this.x = x;
     this.y = y;
     this.obstacle = obstacle;
-    this.sprite = createSprite(texture);
-    this.sprite.x = this.x * Cell.CellSize;
-    this.sprite.y = this.y * Cell.CellSize;
+    this.sprite = new Sprite(texture);
+    this.sprite.x = this.x * Game.CELL_SIZE;
+    this.sprite.y = this.y * Game.CELL_SIZE;
+    this.sprite.width = Game.CELL_SIZE;
+    this.sprite.height = Game.CELL_SIZE;
   }
 }
 
@@ -42,14 +44,8 @@ export default class Map {
   private readonly cells: Cell[][];
   readonly container = new Container();
 
-  private readonly app: Application;
-
-  constructor(
-    size: [number, number],
-    textures: TexturesType,
-    app: Application
-  ) {
-    this.app = app;
+  constructor(size: [number, number]) {
+    const textures = Resources.spritesheet.grass.textures;
     const baseTexture = textures.grass21;
     const additional = [
       textures.grass82,
@@ -66,13 +62,13 @@ export default class Map {
       )
     );
 
-    this.container.eventMode = 'static';
+    this.container.eventMode = "static";
     this.container.on("wheel", this.handleMapMove.bind(this));
     this.container.on("pointermove", this.handleMapMove.bind(this));
     this.container.on("db", this.handleMapMove.bind(this));
     const placeholder = new Sprite();
-    placeholder.width = size[0] * Cell.CellSize;
-    placeholder.height = size[1] * Cell.CellSize;
+    placeholder.width = size[0] * Game.CELL_SIZE;
+    placeholder.height = size[1] * Game.CELL_SIZE;
     placeholder.name = "placeholder";
     this.container.addChild(placeholder);
     this.recalculateRenderedCells();
@@ -94,10 +90,10 @@ export default class Map {
     distanceY: number
   ) {
     const result = [];
-    let minX = Math.ceil((centerX - distanceX) / Cell.CellSize);
-    let maxX = Math.floor((centerX + distanceX) / Cell.CellSize);
-    let minY = Math.ceil((centerY - distanceY) / Cell.CellSize);
-    let maxY = Math.floor((centerY + distanceY) / Cell.CellSize);
+    let minX = Math.ceil((centerX - distanceX) / Game.CELL_SIZE);
+    let maxX = Math.floor((centerX + distanceX) / Game.CELL_SIZE);
+    let minY = Math.ceil((centerY - distanceY) / Game.CELL_SIZE);
+    let maxY = Math.floor((centerY + distanceY) / Game.CELL_SIZE);
     minX = Math.max(0, minX);
     maxX = Math.min(this.cells.length - 1, maxX);
     minY = Math.max(0, minY);
@@ -112,13 +108,13 @@ export default class Map {
     return result;
   }
   recalculateRenderedCells() {
-    const centerPositionX = -this.container.x + this.app.screen.width / 2;
-    const centerPositionY = -this.container.y + this.app.screen.height / 2;
+    const centerPositionX = -this.container.x + pixiApp.screen.width / 2;
+    const centerPositionY = -this.container.y + pixiApp.screen.height / 2;
     const centeredCells = this.getCellsInRadius(
       centerPositionX,
       centerPositionY,
-      this.app.screen.width / 2 + Cell.CellSize + 2,
-      this.app.screen.height / 2 + Cell.CellSize + 2
+      pixiApp.screen.width / 2 + Game.CELL_SIZE + 2,
+      pixiApp.screen.height / 2 + Game.CELL_SIZE + 2
     );
     centeredCells.forEach((cell) => {
       this.container.addChild(cell);
@@ -145,14 +141,13 @@ export default class Map {
     }
     if (
       this.container.x + deltaX < 0 &&
-      this.container.width >= this.app.screen.width - this.container.x - deltaX
+      this.container.width >= pixiApp.screen.width - this.container.x - deltaX
     ) {
       this.container.x += deltaX;
     }
     if (
       this.container.y + deltaY < 0 &&
-      this.container.height >=
-        this.app.screen.height - this.container.y - deltaY
+      this.container.height >= pixiApp.screen.height - this.container.y - deltaY
     ) {
       this.container.y += deltaY;
     }
