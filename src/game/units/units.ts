@@ -1,4 +1,4 @@
-import { Container } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
 import { Unit } from "./unit";
 import { Resources } from "../../app/resourses";
 import Game from "../game";
@@ -6,16 +6,20 @@ import Game from "../game";
 export class Units {
   units: Unit[] = [];
   container = new Container();
-  constructor() {
+ 
+  constructor(size: number[]) {
     this.container.name = "units";
-
+    const placeholder = new Sprite();
+    placeholder.width = size[0] * Game.CELL_SIZE;
+    placeholder.height = size[1] * Game.CELL_SIZE;
+    this.container.addChild(placeholder);
     this.add(
       new Unit({
-        x: 0,
-        y: 0,
+        x: 5,
+        y: 2,
         width: Game.CELL_SIZE * 2,
         height: Game.CELL_SIZE * 2,
-        animatedTexture: Resources.spritesheet.harvester.animations.dig,
+        animatedTexture: Resources.spritesheet.harvester.animations.walk,
       })
     );
   }

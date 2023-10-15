@@ -7,8 +7,8 @@ export class Unit {
   animatedSprite?: AnimatedSprite;
 
   constructor({
-    x,
-    y,
+    x = 0,
+    y = 0,
     width = Game.CELL_SIZE,
     height = Game.CELL_SIZE,
     texture,
@@ -22,8 +22,8 @@ export class Unit {
     animatedTexture?: Texture[];
   }) {
     this.container.name = "unit";
-    this.container.x = x;
-    this.container.y = y;
+    this.container.x = x * Game.CELL_SIZE;
+    this.container.y = y * Game.CELL_SIZE;
     this.container.width = width;
     this.container.height = height;
     if (texture) {
