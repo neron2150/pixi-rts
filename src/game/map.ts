@@ -3,7 +3,7 @@ import {
   Sprite,
   Texture,
 } from "pixi.js";
-import { Resources } from "../app/resourses";
+import { Resources } from "../app/resources";
 import pixiApp from "../app/pixiApp";
 import Game from "./game";
 

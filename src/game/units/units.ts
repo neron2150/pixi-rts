@@ -1,6 +1,6 @@
 import { Container, Sprite } from "pixi.js";
 import { Unit } from "./unit";
-import { Resources } from "../../app/resourses";
+import { Resources } from "../../app/resources";
 import Game from "../game";
 
 export class Units {

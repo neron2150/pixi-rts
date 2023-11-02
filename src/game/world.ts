@@ -38,7 +38,7 @@ export default class World {
         this.isDoubleTap = true;
       }
     });
-    window.addEventListener("touchend", (e) => {
+    window.addEventListener("touchend", () => {
       this.isDoubleTap = false;
     });
     this.container.on("pointermove", this.handleMapMove.bind(this));
